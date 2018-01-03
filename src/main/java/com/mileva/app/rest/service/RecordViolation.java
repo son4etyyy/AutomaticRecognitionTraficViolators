@@ -1,6 +1,7 @@
 package com.mileva.app.rest.service;
 
 import com.mileva.app.rest.model.DBConnector;
+import com.openalpr.jni.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,38 @@ public class RecordViolation {
     @Autowired
     DBConnector dbConnector;
 
-    public void recordViolation(byte[] bytes, OffsetDateTime offsetDateTime) {
+    public void recordViolation(byte[] bytes, OffsetDateTime offsetDateTime) throws AlprException {
         //todo take from alpr
         String licensePlate = "CB 1234 KA";
+
+        Alpr alpr = new Alpr("eu", "/Users/sonia2/Documents/projects/openalpr-master/config/openalpr.conf",
+                "/Users/sonia2/Documents/projects/openalpr-master/runtime_data");
+        // Set top N candidates returned to 20
+        alpr.setTopN(20);
+        alpr.setDefaultRegion("bg");
+
+
+        // Make sure to call this to release memory
+        alpr.unload();
+        AlprResults results = alpr.recognize(bytes);
+        //todo check
+        licensePlate = results.getPlates().get(0).getBestPlate().getCharacters();
+
+        System.out.format("  %-15s%-8s\n", "Plate Number", "Confidence");
+        for (AlprPlateResult result : results.getPlates())
+        {
+            for (AlprPlate plate : result.getTopNPlates()) {
+                if (plate.isMatchesTemplate())
+                    System.out.print("  * ");
+                else
+                    System.out.print("  - ");
+                System.out.format("%-15s%-8f\n", plate.getCharacters(), plate.getOverallConfidence());
+            }
+        }
+
+
+
+
 
         //todo process
 
