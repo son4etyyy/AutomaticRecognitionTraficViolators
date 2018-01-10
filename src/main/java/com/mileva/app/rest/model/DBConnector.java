@@ -13,15 +13,15 @@ public class DBConnector {
 
     public void saveViolation(ByteArrayInputStream inputStream, int pictureSize, OffsetDateTime capturedDate, String licensePlate) throws ClassNotFoundException, SQLException, FileNotFoundException {
         Class.forName("org.postgresql.Driver");
-        String url = "jdbc:postgresql://localhost/test?user=postgres&password=son4encety";
+        String url = "jdbc:postgresql://localhost:5432/violations?user=postgres&password=postgres";
         Connection conn = DriverManager.getConnection(url);
         Statement statement = conn.createStatement();
 
         OffsetDateTime recordedDate = OffsetDateTime.now();
 
         //request
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO \"Violations\".\"ViolationRecords\" " +
-                "(\"picture\", \"capturedDate\", \"recordedDate\", \"licensePlate\") " +
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO \"public\".\"violationrecords\" " +
+                "(\"picture\", \"capturedDate\", \"recordedDate\", \"licensePlateNumber\") " +
                 "VALUES (?, ?, ?, ?)");
         ps.setBinaryStream(1, inputStream, pictureSize /*(int)file.length()*/);
         ps.setObject(2, capturedDate, Types.TIMESTAMP_WITH_TIMEZONE);

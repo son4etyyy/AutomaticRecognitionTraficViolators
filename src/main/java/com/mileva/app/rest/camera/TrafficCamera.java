@@ -8,19 +8,25 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class TrafficCamera {
-   public final static void main(String[] args) {
-      File file = new File("test.txt");
-      FileBody fileBody = new FileBody(file, ContentType.DEFAULT_BINARY);
+   public final static void main(String[] args) throws MalformedURLException {
+      InputStream inputStream = TrafficCamera.class.getResourceAsStream("/bg_b2440px.jpg");
+      InputStreamBody inputStreamBody = new InputStreamBody(inputStream, "file.jpg");
+      //File file = new File("/home/sonia/IdeaProjects/AutomaticRecognitionTraficViolators/src/main/resources/bg.jpg");
+      //FileBody fileBody = new FileBody(file, ContentType.DEFAULT_BINARY);
 
       MultipartEntityBuilder builder = MultipartEntityBuilder.create();
       builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-      builder.addPart("file", fileBody);
+      builder.addPart("file", inputStreamBody);
       HttpEntity entity = builder.build();
 
       HttpPost request = new HttpPost("http://localhost:8080/recordViolator");

@@ -3,6 +3,7 @@ package com.mileva.app.rest.controller;
 //import org.springframework.beans.factory.anotation.RestController;
 
 import com.mileva.app.rest.service.RecordViolation;
+import com.openalpr.jni.AlprException;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -34,6 +35,9 @@ public class RecordViolatorController {
          } catch (IOException e) {
             e.printStackTrace();
             return "Failed with IO exception.";
+         } catch (AlprException e) {
+            e.printStackTrace();
+            return "AlprException";
          }
       } else {
          return "Failed";
