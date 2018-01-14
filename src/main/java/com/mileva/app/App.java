@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 /**
- * Hello world!
+ * Start server side
  *
  */
 @Import({TrafficViolatorsConfiguration.class})
