@@ -5,7 +5,11 @@
   <groupId>mileva.com</groupId>
   <artifactId>AutomaticRecognitionTraficViolators</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+   <modules>
+      <module>TrafficCamera</module>
+      <module>Client</module>
+   </modules>
+   <packaging>pom</packaging>
 
   <name>AutomaticRecognitionTraficViolators</name>
   <url>http://maven.apache.org</url>

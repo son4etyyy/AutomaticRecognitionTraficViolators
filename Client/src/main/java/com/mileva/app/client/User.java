@@ -1,4 +1,4 @@
-package com.mileva.app.rest.client;
+package com.mileva.app.client;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -15,7 +15,7 @@ public class User {
       HttpGet request = new HttpGet("http://localhost:8080/violation?number=B2440PX");
       HttpResponse response = client.execute(request);
 
-// Get the response
+      // Get the response
       BufferedReader rd = new BufferedReader
             (new InputStreamReader(
                   response.getEntity().getContent()));

@@ -1,4 +1,4 @@
-package com.mileva.app.rest.camera;
+package com.mileva.app.camera;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
