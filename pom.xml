@@ -8,6 +8,7 @@
    <modules>
       <module>TrafficCamera</module>
       <module>Client</module>
+      <module>Server</module>
    </modules>
    <packaging>pom</packaging>
 

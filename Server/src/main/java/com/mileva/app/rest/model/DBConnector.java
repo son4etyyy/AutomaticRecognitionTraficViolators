@@ -22,7 +22,7 @@ public class DBConnector {
             "VALUES (?, ?, ?, ?)");
       ps.setBinaryStream(1, inputStream, pictureSize /*(int)file.length()*/);
       ps.setObject(2, capturedDate, Types.TIMESTAMP_WITH_TIMEZONE);
-      ps.setObject(3, recordedDate, java.sql.Types.TIMESTAMP_WITH_TIMEZONE);
+      ps.setObject(3, recordedDate, Types.TIMESTAMP_WITH_TIMEZONE);
       ps.setString(4, licensePlate);
 
       ps.execute();
