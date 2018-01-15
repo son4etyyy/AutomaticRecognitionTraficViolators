@@ -4,12 +4,14 @@ import com.mileva.app.rest.model.DBConnector;
 import com.mileva.app.rest.service.RecordViolation;
 import com.openalpr.jni.AlprException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/")
@@ -44,11 +46,26 @@ public class RecordViolatorController {
       }
    }
 
-   @RequestMapping(value = "violation", method = RequestMethod.GET)
+   @RequestMapping(value = "violationsForNumber", method = RequestMethod.GET)
    public @ResponseBody
    String getByNumber(@RequestParam("number") String number) {
       try {
          return dbConnector.getViolationsForNumber(number);
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } catch (ClassNotFoundException e) {
+         e.printStackTrace();
+      }
+      return "Failed";
+   }
+
+   @RequestMapping(value = "violationsForPeriod", method = RequestMethod.GET)
+   public @ResponseBody
+   String getForPeriod(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date fromDate,
+                       @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date toDate) {
+
+      try {
+         return dbConnector.getViolationsForPeriod(fromDate, toDate);
       } catch (SQLException e) {
          e.printStackTrace();
       } catch (ClassNotFoundException e) {
