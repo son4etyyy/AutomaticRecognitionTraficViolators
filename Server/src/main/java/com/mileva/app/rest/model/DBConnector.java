@@ -49,7 +49,7 @@ public class DBConnector {
             "WHERE \"violationrecords\".\"recordedDate\" BETWEEN ? AND ?");
       //SELECT * FROM "violationrecords" WHERE "violationrecords"."recordedDate" BETWEEN '2018-01-08' AND '2018-01-15';
 
-      ps.setObject(1,  OffsetDateTime.ofInstant(fromDate.toInstant(), ZoneOffset.ofHours(2)),
+      ps.setObject(1, OffsetDateTime.ofInstant(fromDate.toInstant(), ZoneOffset.ofHours(2)),
             Types.TIMESTAMP_WITH_TIMEZONE);
       ps.setObject(2, OffsetDateTime.ofInstant(toDate.toInstant(), ZoneOffset.ofHours(2)),
             Types.TIMESTAMP_WITH_TIMEZONE);
@@ -68,13 +68,13 @@ public class DBConnector {
       //SELECT * FROM "permittedvehicles" WHERE "permittedvehicles"."licenseplatenumber"='C1234AA';
       ResultSet resultSet = ps.executeQuery();
       int rowCount = 0;
-      while(resultSet.next()) {
+      while (resultSet.next()) {
          rowCount = resultSet.getInt(1);
       }
       connection.close();
 
       System.out.print("License plate " + licensePlateNumber);
-      if(rowCount > 0){
+      if (rowCount > 0) {
          System.out.println(" permitted to drive in BUS lane.");
          return true;
       }

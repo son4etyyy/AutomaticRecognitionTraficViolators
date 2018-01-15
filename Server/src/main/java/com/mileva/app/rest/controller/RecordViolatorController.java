@@ -26,7 +26,7 @@ public class RecordViolatorController {
    @RequestMapping(value = "recordViolator", method = RequestMethod.POST)
    public @ResponseBody
    String save(@RequestParam("file") MultipartFile file) {
-      if(!file.isEmpty()) {
+      if (!file.isEmpty()) {
          try {
             byte[] bytes = file.getBytes();
             //todo take date from request
@@ -61,8 +61,8 @@ public class RecordViolatorController {
 
    @RequestMapping(value = "violationsForPeriod", method = RequestMethod.GET)
    public @ResponseBody
-   String getForPeriod(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date fromDate,
-                       @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date toDate) {
+   String getForPeriod(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate) {
 
       try {
          return dbConnector.getViolationsForPeriod(fromDate, toDate);

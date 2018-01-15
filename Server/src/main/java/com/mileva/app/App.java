@@ -10,20 +10,20 @@ import org.springframework.context.annotation.Import;
 
 /**
  * Start server side
- *
  */
 @Import({TrafficViolatorsConfiguration.class})
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "com.mileva.app")
-public class App 
-{
-    public static void main( String[] args) { run(args); }
+public class App {
+   public static void main(String[] args) {
+      run(args);
+   }
 
-    private static ConfigurableApplicationContext run(String[] args, Class<?>... moreSources) {
-        return new SpringApplicationBuilder()
-              .sources(App.class)
-              .sources(moreSources)
-              .bannerMode(Banner.Mode.OFF)
-              .run(args);
-    }
+   private static ConfigurableApplicationContext run(String[] args, Class<?>... moreSources) {
+      return new SpringApplicationBuilder()
+            .sources(App.class)
+            .sources(moreSources)
+            .bannerMode(Banner.Mode.OFF)
+            .run(args);
+   }
 }
