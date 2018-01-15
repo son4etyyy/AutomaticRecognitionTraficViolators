@@ -17,8 +17,6 @@ public class TrafficCamera {
    public final static void main(String[] args) throws MalformedURLException {
       InputStream inputStream = TrafficCamera.class.getResourceAsStream("/bg_b2440px.jpg");
       InputStreamBody inputStreamBody = new InputStreamBody(inputStream, "file.jpg");
-      //File file = new File("/home/sonia/IdeaProjects/AutomaticRecognitionTraficViolators/src/main/resources/bg.jpg");
-      //FileBody fileBody = new FileBody(file, ContentType.DEFAULT_BINARY);
 
       MultipartEntityBuilder builder = MultipartEntityBuilder.create();
       builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);

@@ -24,9 +24,7 @@ public class User {
       HttpResponse response = client.execute(request);
 
       // Get the response
-      BufferedReader rd = new BufferedReader
-            (new InputStreamReader(
-                  response.getEntity().getContent()));
+      BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
       StringBuilder textView = new StringBuilder();
       String line = "";

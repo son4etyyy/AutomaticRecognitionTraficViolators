@@ -60,6 +60,28 @@ public class DBConnector {
       return result;
    }
 
+   public boolean isPermittedVehicle(String licensePlateNumber) throws SQLException, ClassNotFoundException {
+      Connection connection = connectToDb();
+      PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM \"permittedvehicles\" " +
+            "WHERE \"permittedvehicles\".\"licenseplatenumber\"=?");
+      ps.setString(1, licensePlateNumber);
+      //SELECT * FROM "permittedvehicles" WHERE "permittedvehicles"."licenseplatenumber"='C1234AA';
+      ResultSet resultSet = ps.executeQuery();
+      int rowCount = 0;
+      while(resultSet.next()) {
+         rowCount = resultSet.getInt(1);
+      }
+      connection.close();
+
+      System.out.print("License plate " + licensePlateNumber);
+      if(rowCount > 0){
+         System.out.println(" permitted to drive in BUS lane.");
+         return true;
+      }
+      System.out.println(" not permitted to drive in BUS lane.");
+      return false;
+   }
+
    private Connection connectToDb() throws ClassNotFoundException, SQLException {
       Class.forName("org.postgresql.Driver");
       String url = "jdbc:postgresql://localhost:5432/violations?user=postgres&password=postgres";
