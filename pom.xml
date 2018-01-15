@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>mileva.com</groupId>
-  <artifactId>AutomaticRecognitionTraficViolators</artifactId>
-  <version>1.0-SNAPSHOT</version>
+   <groupId>mileva.com</groupId>
+   <artifactId>AutomaticRecognitionTraficViolators</artifactId>
+   <version>1.0-SNAPSHOT</version>
    <modules>
       <module>TrafficCamera</module>
       <module>Client</module>
@@ -12,82 +12,67 @@
    </modules>
    <packaging>pom</packaging>
 
-  <name>AutomaticRecognitionTraficViolators</name>
-  <url>http://maven.apache.org</url>
+   <name>AutomaticRecognitionTraficViolators</name>
+   <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+   <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   </properties>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <executable>true</executable>
-          <mainClass>com.mileva.app.App</mainClass>
-        </configuration>
-         <dependencies>
-            <dependency>
-               <groupId>org.springframework</groupId>
-               <artifactId>springloaded</artifactId>
-               <version>1.2.6.RELEASE</version>
-            </dependency>
-         </dependencies>
-      </plugin>
-        <plugin>
+   <build>
+      <plugins>
+         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
+               <source>1.8</source>
+               <target>1.8</target>
             </configuration>
-        </plugin>
-    </plugins>
-  </build>
+         </plugin>
+      </plugins>
+   </build>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-       <version>1.5.8.RELEASE</version>
-    </dependency>
-     <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-test</artifactId>
-        <version>1.5.8.RELEASE</version>
-        <scope>test</scope>
-     </dependency>
-     <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-test</artifactId>
-        <version>1.5.8.RELEASE</version>
-        <scope>test</scope>
-     </dependency>
-     <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
-        <version>4.5.4</version>
-     </dependency>
-     <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpmime</artifactId>
-        <version>4.5.4</version>
-     </dependency>
+   <dependencies>
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>3.8.1</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-web</artifactId>
+         <version>1.5.8.RELEASE</version>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-test</artifactId>
+         <version>1.5.8.RELEASE</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-test</artifactId>
+         <version>1.5.8.RELEASE</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.httpcomponents</groupId>
+         <artifactId>httpclient</artifactId>
+         <version>4.5.4</version>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.httpcomponents</groupId>
+         <artifactId>httpmime</artifactId>
+         <version>4.5.4</version>
+      </dependency>
       <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
       <dependency>
-          <groupId>org.postgresql</groupId>
-          <artifactId>postgresql</artifactId>
-          <version>42.1.4</version>
+         <groupId>org.postgresql</groupId>
+         <artifactId>postgresql</artifactId>
+         <version>42.1.4</version>
       </dependency>
 
 
-  </dependencies>
+   </dependencies>
 </project>
