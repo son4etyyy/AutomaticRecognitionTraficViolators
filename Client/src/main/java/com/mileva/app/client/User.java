@@ -4,12 +4,16 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class User {
+   final static Logger logger = LoggerFactory.getLogger(User.class);
+
    public final static void main(String[] args) throws IOException {
       HttpClient client = new DefaultHttpClient();
       String requestforNumber = "http://localhost:8080/violationsForNumber?number=B2440PX";
@@ -31,6 +35,6 @@ public class User {
       while ((line = rd.readLine()) != null) {
          textView.append(line);
       }
-      System.out.println("User has received: " + textView.toString());
+      logger.debug("User has received: " + textView.toString());
    }
 }

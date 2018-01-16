@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 /**
  * Start server side
  */
-@Import({TrafficViolatorsConfiguration.class})
+@Import(TrafficViolatorsConfiguration.class)
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "com.mileva.app")
 public class App {

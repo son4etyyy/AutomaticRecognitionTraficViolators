@@ -3,6 +3,8 @@ package com.mileva.app.rest.controller;
 import com.mileva.app.rest.model.DBConnector;
 import com.mileva.app.rest.service.RecordViolation;
 import com.openalpr.jni.AlprException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/")
 public class RecordViolatorController {
+   final static Logger logger = LoggerFactory.getLogger(RecordViolatorController.class);
 
    @Autowired
    RecordViolation recordViolation;
@@ -27,6 +30,7 @@ public class RecordViolatorController {
    public @ResponseBody
    String save(@RequestParam("file") MultipartFile file) {
       if (!file.isEmpty()) {
+         logger.info("Received request to record violation.");
          try {
             byte[] bytes = file.getBytes();
             //todo take date from request

@@ -2,6 +2,8 @@ package com.mileva.app.rest.service;
 
 import com.mileva.app.rest.model.DBConnector;
 import com.openalpr.jni.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.time.OffsetDateTime;
 
 @Service
 public class RecordViolation {
+   final static Logger logger = LoggerFactory.getLogger(RecordViolation.class);
+
    @Autowired
    DBConnector dbConnector;
 
@@ -27,22 +31,20 @@ public class RecordViolation {
       AlprResults results = alpr.recognize(bytes);
       licensePlate = results.getPlates().get(0).getBestPlate().getCharacters();
 
-      System.out.format("  %-15s%-8s\n", "Plate Number", "Confidence");
+      logger.trace(String.format("  %-15s%-8s\n", "Plate Number", "Confidence"));
       for (AlprPlateResult result : results.getPlates()) {
          for (AlprPlate plate : result.getTopNPlates()) {
             if (plate.isMatchesTemplate()) {
                licensePlate = plate.getCharacters();
-               System.out.print("  * ");
                break;
             } else
-               System.out.print("  - ");
-            System.out.format("%-15s%-8f\n", plate.getCharacters(), plate.getOverallConfidence());
+               logger.trace(String.format("%-15s%-8f\n", plate.getCharacters(), plate.getOverallConfidence()));
          }
       }
       //release memory
       alpr.unload();
 
-      System.out.println("License plate: " + licensePlate);
+      logger.debug("License plate: " + licensePlate);
 
       try {
          //check if vehicle allowed to drive in BUS lane

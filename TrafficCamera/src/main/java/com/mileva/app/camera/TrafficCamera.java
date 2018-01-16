@@ -8,12 +8,16 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 
 public class TrafficCamera {
+   final static Logger logger = LoggerFactory.getLogger(TrafficCamera.class);
+
    public final static void main(String[] args) throws MalformedURLException {
       InputStream inputStream = TrafficCamera.class.getResourceAsStream("/bg_b2440px.jpg");
       InputStreamBody inputStreamBody = new InputStreamBody(inputStream, "file.jpg");
@@ -35,7 +39,7 @@ public class TrafficCamera {
       } catch (IOException e) {
          e.printStackTrace();
       }
-      System.out.println("Response status:" + code);
+      logger.debug("Response status:" + code);
    }
 
 }

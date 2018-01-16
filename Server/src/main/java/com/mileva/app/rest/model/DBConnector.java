@@ -1,5 +1,7 @@
 package com.mileva.app.rest.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -11,6 +13,7 @@ import java.util.Date;
 
 @Service
 public class DBConnector {
+   final static Logger logger = LoggerFactory.getLogger(DBConnector.class);
 
    public void saveViolation(ByteArrayInputStream inputStream, int pictureSize, OffsetDateTime capturedDate, String licensePlate) throws ClassNotFoundException, SQLException, FileNotFoundException {
       Connection conn = connectToDb();
@@ -73,12 +76,12 @@ public class DBConnector {
       }
       connection.close();
 
-      System.out.print("License plate " + licensePlateNumber);
+      logger.debug("License plate " + licensePlateNumber);
       if (rowCount > 0) {
-         System.out.println(" permitted to drive in BUS lane.");
+         logger.debug(" permitted to drive in BUS lane.");
          return true;
       }
-      System.out.println(" not permitted to drive in BUS lane.");
+      logger.debug(" not permitted to drive in BUS lane.");
       return false;
    }
 
