@@ -1,7 +1,7 @@
 sudo apt-get -y install postgresql postgresql-contrib
 sudo apt-get -y install pgadmin3
 sudo -u postgres psql -c "CREATE USER alpralpr WITH PASSWORD 'alpralpr'"
-sudo -u postgres psql -c "create database alpralpr owner alpralpr"
+sudo -u postgres psql -c "CREATE DATABASE alpralpr OWNER alpralpr"
 echo "\c alpralpr;
-CREATE TABLE ViolationRecord (picture bytea, licensePlateNumber character varying(128), capturedDate timestamp with time zone, recordedDate timestamp with time zone);
-CREATE TABLE PermittedVehicles (licensePlateNumber character varying(128), type character varying(128), PRIMARY KEY(licensePlateNumber));" |sudo -u postgres psql
+CREATE TABLE violation_record (picture bytea, license_plate_number character varying(128), captured_date timestamp with time zone, recorded_date timestamp with time zone, PRIMARY KEY(license_plate_number, captured_date));
+CREATE TABLE permitted_vehicles (license_plate_number character varying(128), type character varying(128), PRIMARY KEY(license_plate_number));" |sudo -u postgres psql

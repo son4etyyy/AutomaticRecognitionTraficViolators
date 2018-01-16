@@ -27,15 +27,15 @@ public class TrafficCamera {
       request.setEntity(entity);
 
       HttpClient client = HttpClientBuilder.create().build();
-      HttpResponse response;
+
       int code = 0;
       try {
-         response = client.execute(request);
+         HttpResponse response = client.execute(request);
          code = response.getStatusLine().getStatusCode();
       } catch (IOException e) {
          e.printStackTrace();
       }
-      System.out.println("Responce status:" + code);
+      System.out.println("Response status:" + code);
    }
 
 }

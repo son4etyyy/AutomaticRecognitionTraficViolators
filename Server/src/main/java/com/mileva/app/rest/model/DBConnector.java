@@ -17,8 +17,8 @@ public class DBConnector {
       OffsetDateTime recordedDate = OffsetDateTime.now();
 
       //request
-      PreparedStatement ps = conn.prepareStatement("INSERT INTO \"public\".\"violationrecords\" " +
-            "(\"picture\", \"capturedDate\", \"recordedDate\", \"licensePlateNumber\") " +
+      PreparedStatement ps = conn.prepareStatement("INSERT INTO \"public\".\"violation_records\" " +
+            "(\"picture\", \"captured_date\", \"recorded_date\", \"license_plate_number\") " +
             "VALUES (?, ?, ?, ?)");
       ps.setBinaryStream(1, inputStream, pictureSize /*(int)file.length()*/);
       ps.setObject(2, capturedDate, Types.TIMESTAMP_WITH_TIMEZONE);
@@ -31,8 +31,8 @@ public class DBConnector {
 
    public String getViolationsForNumber(String licensePlateNumber) throws SQLException, ClassNotFoundException {
       Connection connection = connectToDb();
-      PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"violationrecords\" " +
-            "WHERE \"violationrecords\".\"licensePlateNumber\"=?");
+      PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"violation_records\" " +
+            "WHERE \"violation_records\".\"license_plate_number\"=?");
       ps.setString(1, licensePlateNumber);
       //SELECT * FROM "violationrecords" WHERE "violationrecords"."licensePlateNumber"='B2440PX';
       ResultSet resultSet = ps.executeQuery();
@@ -45,8 +45,8 @@ public class DBConnector {
    public String getViolationsForPeriod(Date fromDate, Date toDate)
          throws SQLException, ClassNotFoundException {
       Connection connection = connectToDb();
-      PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"violationrecords\" " +
-            "WHERE \"violationrecords\".\"recordedDate\" BETWEEN ? AND ?");
+      PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"violation_records\" " +
+            "WHERE \"violation_records\".\"recorded_date\" BETWEEN ? AND ?");
       //SELECT * FROM "violationrecords" WHERE "violationrecords"."recordedDate" BETWEEN '2018-01-08' AND '2018-01-15';
 
       ps.setObject(1, OffsetDateTime.ofInstant(fromDate.toInstant(), ZoneOffset.ofHours(2)),
@@ -62,8 +62,8 @@ public class DBConnector {
 
    public boolean isPermittedVehicle(String licensePlateNumber) throws SQLException, ClassNotFoundException {
       Connection connection = connectToDb();
-      PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM \"permittedvehicles\" " +
-            "WHERE \"permittedvehicles\".\"licenseplatenumber\"=?");
+      PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM \"permitted_vehicles\" " +
+            "WHERE \"permitted_vehicles\".\"license_plate_number\"=?");
       ps.setString(1, licensePlateNumber);
       //SELECT * FROM "permittedvehicles" WHERE "permittedvehicles"."licenseplatenumber"='C1234AA';
       ResultSet resultSet = ps.executeQuery();
@@ -84,7 +84,7 @@ public class DBConnector {
 
    private Connection connectToDb() throws ClassNotFoundException, SQLException {
       Class.forName("org.postgresql.Driver");
-      String url = "jdbc:postgresql://localhost:5432/violations?user=postgres&password=postgres";
+      String url = "jdbc:postgresql://localhost:5432/violations?user=alpralpr&password=alpralpr";
       return DriverManager.getConnection(url);
    }
 
@@ -95,11 +95,11 @@ public class DBConnector {
       builder.append("\n");
       while (resultSet.next()) {
          builder.append("License plate number: ");
-         builder.append(resultSet.getString("licensePlateNumber"));
+         builder.append(resultSet.getString("license_plate_number"));
          builder.append(", captured date: ");
-         builder.append(resultSet.getObject("capturedDate", OffsetDateTime.class));
+         builder.append(resultSet.getObject("captured_date", OffsetDateTime.class));
          builder.append(", recorded date: ");
-         builder.append(resultSet.getObject("recordedDate", OffsetDateTime.class));
+         builder.append(resultSet.getObject("recorded_date", OffsetDateTime.class));
          builder.append("\n");
       }
       return builder.toString();
