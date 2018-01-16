@@ -17,7 +17,7 @@ public class DBConnector {
       OffsetDateTime recordedDate = OffsetDateTime.now();
 
       //request
-      PreparedStatement ps = conn.prepareStatement("INSERT INTO \"public\".\"violation_records\" " +
+      PreparedStatement ps = conn.prepareStatement("INSERT INTO \"public\".\"violation_record\" " +
             "(\"picture\", \"captured_date\", \"recorded_date\", \"license_plate_number\") " +
             "VALUES (?, ?, ?, ?)");
       ps.setBinaryStream(1, inputStream, pictureSize /*(int)file.length()*/);
@@ -31,8 +31,8 @@ public class DBConnector {
 
    public String getViolationsForNumber(String licensePlateNumber) throws SQLException, ClassNotFoundException {
       Connection connection = connectToDb();
-      PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"violation_records\" " +
-            "WHERE \"violation_records\".\"license_plate_number\"=?");
+      PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"violation_record\" " +
+            "WHERE \"violation_record\".\"license_plate_number\"=?");
       ps.setString(1, licensePlateNumber);
       //SELECT * FROM "violationrecords" WHERE "violationrecords"."licensePlateNumber"='B2440PX';
       ResultSet resultSet = ps.executeQuery();
@@ -45,8 +45,8 @@ public class DBConnector {
    public String getViolationsForPeriod(Date fromDate, Date toDate)
          throws SQLException, ClassNotFoundException {
       Connection connection = connectToDb();
-      PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"violation_records\" " +
-            "WHERE \"violation_records\".\"recorded_date\" BETWEEN ? AND ?");
+      PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"violation_record\" " +
+            "WHERE \"violation_record\".\"recorded_date\" BETWEEN ? AND ?");
       //SELECT * FROM "violationrecords" WHERE "violationrecords"."recordedDate" BETWEEN '2018-01-08' AND '2018-01-15';
 
       ps.setObject(1, OffsetDateTime.ofInstant(fromDate.toInstant(), ZoneOffset.ofHours(2)),
@@ -62,8 +62,8 @@ public class DBConnector {
 
    public boolean isPermittedVehicle(String licensePlateNumber) throws SQLException, ClassNotFoundException {
       Connection connection = connectToDb();
-      PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM \"permitted_vehicles\" " +
-            "WHERE \"permitted_vehicles\".\"license_plate_number\"=?");
+      PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM \"permitted_vehicle\" " +
+            "WHERE \"permitted_vehicle\".\"license_plate_number\"=?");
       ps.setString(1, licensePlateNumber);
       //SELECT * FROM "permittedvehicles" WHERE "permittedvehicles"."licenseplatenumber"='C1234AA';
       ResultSet resultSet = ps.executeQuery();
@@ -84,7 +84,7 @@ public class DBConnector {
 
    private Connection connectToDb() throws ClassNotFoundException, SQLException {
       Class.forName("org.postgresql.Driver");
-      String url = "jdbc:postgresql://localhost:5432/violations?user=alpralpr&password=alpralpr";
+      String url = "jdbc:postgresql://localhost:5432/alpralpr?user=alpralpr&password=alpralpr";
       return DriverManager.getConnection(url);
    }
 
