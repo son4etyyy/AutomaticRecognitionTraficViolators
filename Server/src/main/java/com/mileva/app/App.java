@@ -7,12 +7,14 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * Start server side
  */
 @Import(TrafficViolatorsConfiguration.class)
 @EnableAutoConfiguration
+@EnableJpaRepositories("com.mileva.app.rest.repo")
 @ComponentScan(basePackages = "com.mileva.app")
 public class App {
    public static void main(String[] args) {

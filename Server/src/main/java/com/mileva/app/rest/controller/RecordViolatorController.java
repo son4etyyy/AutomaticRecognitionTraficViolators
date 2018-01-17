@@ -1,6 +1,7 @@
 package com.mileva.app.rest.controller;
 
-import com.mileva.app.rest.model.DBConnector;
+import com.mileva.app.rest.model.ViolationRecord;
+import com.mileva.app.rest.repo.ViolationRecordRepository;
 import com.mileva.app.rest.service.RecordViolation;
 import com.openalpr.jni.AlprException;
 import org.slf4j.Logger;
@@ -11,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -24,7 +26,7 @@ public class RecordViolatorController {
    RecordViolation recordViolation;
 
    @Autowired
-   DBConnector dbConnector;
+   ViolationRecordRepository violationRecordRepository;
 
    @RequestMapping(value = "recordViolator", method = RequestMethod.POST)
    public @ResponseBody
@@ -34,7 +36,7 @@ public class RecordViolatorController {
          try {
             byte[] bytes = file.getBytes();
             //todo take date from request
-            OffsetDateTime capturedDate = OffsetDateTime.now();
+            Timestamp capturedDate = Timestamp.from(Instant.now());
             recordViolation.recordViolation(bytes, capturedDate);
 
             return "Success";
@@ -53,14 +55,8 @@ public class RecordViolatorController {
    @RequestMapping(value = "violationsForNumber", method = RequestMethod.GET)
    public @ResponseBody
    String getByNumber(@RequestParam("number") String number) {
-      try {
-         return dbConnector.getViolationsForNumber(number);
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } catch (ClassNotFoundException e) {
-         e.printStackTrace();
-      }
-      return "Failed";
+      List<ViolationRecord> list = violationRecordRepository.findByLicensePlateNumber(number);
+      return list.toString();
    }
 
    @RequestMapping(value = "violationsForPeriod", method = RequestMethod.GET)
@@ -68,14 +64,9 @@ public class RecordViolatorController {
    String getForPeriod(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
                        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate) {
 
-      try {
-         return dbConnector.getViolationsForPeriod(fromDate, toDate);
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } catch (ClassNotFoundException e) {
-         e.printStackTrace();
-      }
-      return "Failed";
+      Timestamp from = new Timestamp(fromDate.getTime());
+      Timestamp to = new Timestamp(toDate.getTime());
+      List<ViolationRecord> list = violationRecordRepository.findByRecordedDateBetween(from, to);
+      return list.toString();
    }
-
 }
