@@ -25,8 +25,12 @@ public class RecordViolation {
    public void recordViolation(byte[] bytes, Timestamp timestamp) throws AlprException {
       String licensePlate;
 
-      Alpr alpr = new Alpr("eu", "/home/sonia/openalpr/config/openalpr.conf",
-            "/home/sonia/openalpr/runtime_data");
+//      Alpr alpr = new Alpr("eu", "/home/sonia/openalpr/config/openalpr.conf",
+//            "/home/sonia/openalpr/runtime_data");
+
+      Alpr alpr = new Alpr("eu", "/home/milevas/Projects/AutomaticRecognitionTraficViolators-master/Server/src/main/resources/openalpr/config/openalpr.conf",
+              "/home/milevas/Projects/AutomaticRecognitionTraficViolators-master/Server/src/main/resources/openalpr/runtime_data");
+
       // Set top N candidates returned to 20
       alpr.setTopN(20);
       alpr.setDefaultRegion("bg");

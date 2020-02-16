@@ -19,7 +19,7 @@ public class User {
       String requestforNumber = "http://localhost:8080/violationsForNumber?number=B2440PX";
       sendRequest(client, requestforNumber);
 
-      String requestforPeriod = "http://localhost:8080/violationsForPeriod?fromDate=2018-01-08&toDate=2018-01-18";
+      String requestforPeriod = "http://localhost:8080/violationsForPeriod?fromDate=2018-01-08&toDate=2019-12-18";
       sendRequest(client, requestforPeriod);
    }
 
@@ -35,6 +35,6 @@ public class User {
       while ((line = rd.readLine()) != null) {
          textView.append(line);
       }
-      logger.debug("User has received: " + textView.toString());
+      logger.info("User has received: " + textView.toString());
    }
 }
