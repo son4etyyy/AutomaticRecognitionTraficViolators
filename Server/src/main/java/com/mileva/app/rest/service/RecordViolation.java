@@ -23,20 +23,19 @@ public class RecordViolation {
    PermittedVehicleReporsitory permittedVehicleReporsitory;
 
    public void recordViolation(byte[] bytes, Timestamp timestamp) throws AlprException {
-      String licensePlate;
+      String openalprFolder = getClass().getResource("/openalpr").getPath();
+      String openalprConfigFile = openalprFolder + "/config/openalpr.conf";
+      String openalprRuntimeDir = openalprFolder + "/runtime_data";
+      String region = "eu";
 
-//      Alpr alpr = new Alpr("eu", "/home/sonia/openalpr/config/openalpr.conf",
-//            "/home/sonia/openalpr/runtime_data");
-
-      Alpr alpr = new Alpr("eu", "/home/milevas/Projects/AutomaticRecognitionTraficViolators-master/Server/src/main/resources/openalpr/config/openalpr.conf",
-              "/home/milevas/Projects/AutomaticRecognitionTraficViolators-master/Server/src/main/resources/openalpr/runtime_data");
+      Alpr alpr = new Alpr(region, openalprConfigFile, openalprRuntimeDir);
 
       // Set top N candidates returned to 20
       alpr.setTopN(20);
       alpr.setDefaultRegion("bg");
 
       AlprResults results = alpr.recognize(bytes);
-      licensePlate = results.getPlates().get(0).getBestPlate().getCharacters();
+      String licensePlate = results.getPlates().get(0).getBestPlate().getCharacters();
 
       logger.trace(String.format("  %-15s%-8s\n", "Plate Number", "Confidence"));
       for (AlprPlateResult result : results.getPlates()) {
