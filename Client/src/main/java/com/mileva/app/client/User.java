@@ -16,10 +16,10 @@ public class User {
 
    public final static void main(String[] args) throws IOException {
       HttpClient client = new DefaultHttpClient();
-      String requestforNumber = "http://localhost:8080/violationsForNumber?number=B2440PX";
+      String requestforNumber = "http://localhost:8080/violations/number/B2440PX";
       sendRequest(client, requestforNumber);
 
-      String requestforPeriod = "http://localhost:8080/violationsForPeriod?fromDate=2018-01-08&toDate=2019-12-18";
+      String requestforPeriod = "http://localhost:8080/violations?fromDate=2018-01-08&toDate=2020-12-18";
       sendRequest(client, requestforPeriod);
    }
 

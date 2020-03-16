@@ -27,7 +27,7 @@ public class TrafficCamera {
       builder.addPart("file", inputStreamBody);
       HttpEntity entity = builder.build();
 
-      HttpPost request = new HttpPost("http://localhost:8080/recordViolator");
+      HttpPost request = new HttpPost("http://localhost:8080/violations");
       request.setEntity(entity);
 
       HttpClient client = HttpClientBuilder.create().build();
