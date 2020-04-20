@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,16 +19,19 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/")
 public class RecordViolatorController {
    final static Logger logger = LoggerFactory.getLogger(RecordViolatorController.class);
 
-   @Autowired
-   RecordViolation recordViolation;
+   private RecordViolation recordViolation;
+   private ViolationRecordRepository violationRecordRepository;
 
    @Autowired
-   ViolationRecordRepository violationRecordRepository;
+   public RecordViolatorController(RecordViolation recordViolation, ViolationRecordRepository violationRecordRepository) {
+      this.recordViolation = recordViolation;
+      this.violationRecordRepository = violationRecordRepository;
+   }
 
    @RequestMapping(value = "violations", method = RequestMethod.POST)
    public @ResponseBody
@@ -52,23 +57,28 @@ public class RecordViolatorController {
       }
    }
 
-   @RequestMapping(value = "violations/number/{numberId}", method = RequestMethod.GET)
-   public @ResponseBody
-   String getByNumber(@PathVariable("numberId") String number) {
-      logger.info("Handling request for number: " + number);
-      List<ViolationRecord> list = violationRecordRepository.findByLicensePlateNumber(number);
-      return list.toString();
+   @GetMapping("violations/number/{numberId}")
+   public String getViolations(@PathVariable("numberId") String numberId, Model model) {
+      if (numberId.isEmpty()) {
+         return "error";
+      }
+      logger.info("Handling request for number: " + numberId);
+      List<ViolationRecord> list = violationRecordRepository.findByLicensePlateNumber(numberId);
+
+      model.addAttribute("violationRecords", list);
+      return "violations_number";
    }
 
-   @RequestMapping(value = "violations", method = RequestMethod.GET)
-   public @ResponseBody
-   String getForPeriod(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
-                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate) {
-
+   @GetMapping(value = "violations")
+   public String getForPeriod(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+                       Model model) {
       logger.info("Handling request for period: " + fromDate + " - " + toDate);
       Timestamp from = new Timestamp(fromDate.getTime());
       Timestamp to = new Timestamp(toDate.getTime());
       List<ViolationRecord> list = violationRecordRepository.findByRecordedDateBetween(from, to);
-      return list.toString();
+
+      model.addAttribute("violationRecords", list);
+      return "violations_period";
    }
 }
