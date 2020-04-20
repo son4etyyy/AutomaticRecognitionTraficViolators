@@ -1,21 +1,22 @@
 package com.mileva.app;
 
-import com.mileva.app.rest.configuration.TrafficViolatorsConfiguration;
 import org.springframework.boot.Banner;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Start server side
  */
-@Import(TrafficViolatorsConfiguration.class)
-@EnableAutoConfiguration
-@EnableJpaRepositories("com.mileva.app.rest.repo")
+@SpringBootApplication
 @ComponentScan(basePackages = "com.mileva.app")
+@EnableJpaRepositories(basePackages="com.mileva.app.rest.repo")
+@EnableTransactionManagement
+@EntityScan(basePackages="com.mileva.app.rest.model")
 public class App {
    public static void main(String[] args) {
       run(args);
