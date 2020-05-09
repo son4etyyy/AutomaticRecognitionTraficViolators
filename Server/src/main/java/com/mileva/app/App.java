@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * Start server side
  */
 @SpringBootApplication
-@ComponentScan(basePackages = "com.mileva.app")
 @EnableJpaRepositories(basePackages="com.mileva.app.rest.repo")
 @EnableTransactionManagement
 @EntityScan(basePackages="com.mileva.app.rest.model")

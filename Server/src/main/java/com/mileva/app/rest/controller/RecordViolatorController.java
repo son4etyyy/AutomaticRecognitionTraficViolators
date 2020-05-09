@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/violations")
 public class RecordViolatorController {
    final static Logger logger = LoggerFactory.getLogger(RecordViolatorController.class);
 
@@ -28,12 +28,13 @@ public class RecordViolatorController {
    private ViolationRecordRepository violationRecordRepository;
 
    @Autowired
-   public RecordViolatorController(RecordViolation recordViolation, ViolationRecordRepository violationRecordRepository) {
+   public RecordViolatorController(RecordViolation recordViolation,
+                                   ViolationRecordRepository violationRecordRepository) {
       this.recordViolation = recordViolation;
       this.violationRecordRepository = violationRecordRepository;
    }
 
-   @RequestMapping(value = "violations", method = RequestMethod.POST)
+   @PostMapping()
    public @ResponseBody
    String save(@RequestParam("file") MultipartFile file) {
       if (!file.isEmpty()) {
@@ -57,7 +58,7 @@ public class RecordViolatorController {
       }
    }
 
-   @GetMapping("violations/number/{numberId}")
+   @GetMapping("/number/{numberId}")
    public String getViolations(@PathVariable("numberId") String numberId, Model model) {
       if (numberId.isEmpty()) {
          return "error";
@@ -69,7 +70,7 @@ public class RecordViolatorController {
       return "violations_number";
    }
 
-   @GetMapping(value = "violations")
+   @GetMapping()
    public String getForPeriod(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
                        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
                        Model model) {
